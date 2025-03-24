@@ -136,7 +136,7 @@ class RecipesListScreenState extends State<RecipesListScreen> {
                     final recipes = currentRecipes.data ?? [];
 
                     if (recipes.isEmpty) {
-                      return const Center(child: Text(AppStrings.geminiError));
+                      return const Center(child: Text(AppStrings.emptyList));
                     }
 
                     return Column(

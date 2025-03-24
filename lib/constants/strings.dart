@@ -22,5 +22,6 @@ class AppStrings {
   static const String ingredients = "Ingredients:";
   static const String instructions = "Instructions:";
   static const String inputHint = "What do you feel like eating?";
-  static const String newResultsButton = "What do you feel like eating?";
+  static const String newResultsButton = "I don’t like these";
+  static const String emptyList = "No recipes found";
 }
