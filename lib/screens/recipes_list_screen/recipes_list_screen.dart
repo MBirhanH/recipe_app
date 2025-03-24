@@ -21,7 +21,6 @@ class RecipesListScreenState extends State<RecipesListScreen> {
           BehaviorSubject()),
       RecipesRepo());
 
-  // Add a controller to track the search text
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -169,7 +168,6 @@ class RecipesListScreenState extends State<RecipesListScreen> {
                             },
                           ),
                         ),
-                        // Only show the button when in API mode
                         if (state.listType == ListType.API)
                           Center(
                             child: Padding(
@@ -179,13 +177,12 @@ class RecipesListScreenState extends State<RecipesListScreen> {
                                 width: 205,
                                 child: TextButton(
                                   onPressed: () {
-                                    // Re-run the search with the current search text
+                                    // Re-run the search
                                     viewModel.input.searchTapped
                                         .add(_searchController.text);
                                   },
                                   style: TextButton.styleFrom(
                                     backgroundColor: const Color(0xFF6052A3),
-                                    // Purple color
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
