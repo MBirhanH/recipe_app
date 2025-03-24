@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/muradasilbirhan/Desktop/recipe_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/Users/muradasilbirhan/Desktop/test_app/recipe_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/muradasilbirhan/Desktop/recipe_app/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/muradasilbirhan/Desktop/test_app/recipe_app/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
