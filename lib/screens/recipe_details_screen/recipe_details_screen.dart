@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/constants/strings.dart';
 import 'package:recipe_app/model/recipe_model.dart';
 
-class RecipeDetailsScreen extends StatelessWidget {
+class RecipeDetailsScreen extends StatefulWidget {
   final Recipe recipe;
   final Function? saveRecipe;
   final Function? removeRecipe;
@@ -13,6 +13,31 @@ class RecipeDetailsScreen extends StatelessWidget {
     this.saveRecipe,
     this.removeRecipe,
   });
+
+  @override
+  State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
+}
+
+class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
+  late bool isSaved;
+
+  @override
+  void initState() {
+    super.initState();
+    isSaved = widget.recipe.saved;
+  }
+
+  void onRecipeTap() {
+    setState(() {
+      if (isSaved) {
+        widget.removeRecipe?.call();
+        isSaved = false;
+      } else {
+        widget.saveRecipe?.call();
+        isSaved = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +94,7 @@ class RecipeDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    recipe.title,
+                                    widget.recipe.title,
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -77,7 +102,7 @@ class RecipeDetailsScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    recipe.time,
+                                    widget.recipe.time,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey.shade700,
@@ -88,10 +113,12 @@ class RecipeDetailsScreen extends StatelessWidget {
                             ),
                             // Favorite button
                             InkWell(
-                              onTap: () => onRecipeTap(),
-                              child: (recipe.saved)
-                                  ? const Icon(Icons.favorite, size: 24, color: Colors.purple)
-                                  : const Icon(Icons.favorite_border, size: 24, color: Colors.purple),
+                              onTap: onRecipeTap,
+                              child: isSaved
+                                  ? const Icon(Icons.favorite,
+                                      size: 24, color: Colors.purple)
+                                  : const Icon(Icons.favorite_border,
+                                      size: 24, color: Colors.purple),
                             ),
                           ],
                         ),
@@ -107,7 +134,9 @@ class RecipeDetailsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Column(
-                          children: recipe.ingredients.map((e) => _buildBulletPoint(e)).toList(),
+                          children: widget.recipe.ingredients
+                              .map((e) => _buildBulletPoint(e))
+                              .toList(),
                         ),
                         const SizedBox(height: 24),
 
@@ -121,10 +150,12 @@ class RecipeDetailsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Column(
-                          children: recipe.steps.map((e) => _buildNumberedInstruction(
-                            recipe.steps.indexOf(e) + 1,
-                            e,
-                          )).toList(),
+                          children: widget.recipe.steps
+                              .map((e) => _buildNumberedInstruction(
+                                    widget.recipe.steps.indexOf(e) + 1,
+                                    e,
+                                  ))
+                              .toList(),
                         ),
                       ],
                     ),
@@ -138,21 +169,14 @@ class RecipeDetailsScreen extends StatelessWidget {
     );
   }
 
-  void onRecipeTap() {
-    if (recipe.saved) {
-      removeRecipe?.call();
-    } else {
-      saveRecipe?.call();
-    }
-  }
-
   Widget _buildBulletPoint(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('• ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('• ',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           Expanded(
             child: Text(
               text,
@@ -170,7 +194,8 @@ class RecipeDetailsScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$number. ', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text('$number. ',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           Expanded(
             child: Text(
               text,
